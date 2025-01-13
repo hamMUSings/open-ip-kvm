@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
-    "mjpg": "bash start-mjpg-streamer.sh"
+    "mjpg": "bash start-ustreamer.sh"
   },
   "author": "Nihiue",
   "license": "MIT",

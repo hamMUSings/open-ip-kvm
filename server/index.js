@@ -3,7 +3,7 @@ const url = require('url');
 
 const config = require("./config.json");
 
-config.app_title = config.app_title || 'Open IP-KVM';
+config.app_title = config.app_title || 'Open IP-KVM w/ustreamer';
 
 const ws = require('ws');
 const Koa = require('koa');
@@ -22,11 +22,11 @@ async function start() {
     const router = new Router();
     //   const writeSerial = startSerial(config.serialport.portPath, config.serialport.baudRate);
     hidDevice = driver(config.serialport);
-    // await startMJPGStreamer(config.mjpg_streamer);
-    if (config.mjpg_streamer) {
-      config.mjpg_streamer.stream_port = config.mjpg_streamer.stream_port || 8010;
-      const { startMJPGStreamer } = require('./mjpg-streamer.js');
-      await startMJPGStreamer();
+    // await startuStreamer(config.ustreamer);
+    if (config.ustreamer) {
+      config.ustreamer.stream_port = config.ustreamer.stream_port || 8010;
+      const { startuStreamer } = require('./ustreamer.js');
+      await startuStreamer(config.ustreamer);
     } else if (config.ffmpeg_streamer) {
       // 用于存储客户端连接
       let clients = [];
