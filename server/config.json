@@ -3,7 +3,7 @@
   "listen_port": 8000,
   "serialport": {
     "portPath": "/dev/ttyUSB0",
-    "baudRate": 115200
+    "baudRate": 9600
   },
   "ustreamer": {
     "device": "/dev/video0",
