@@ -8,6 +8,11 @@ Related article:
 
 [English Version By Google Translate](https://zhuanlan-zhihu-com.translate.goog/p/578602475?_x_tr_sl=zh-CN&_x_tr_tl=en)
 
+# Changes in this fork (hammusings)
+
+* Merged to main the CH9329 adapter driver option from [ciaoly](https://github.com/ciaoly/open-ip-kvm)
+* Changed to ustreamer from mjpg_streamer
+
 ## What is IP-KVM
 
 KVM Over IP (IP-KVM) is a hardware based solution for remote access to your computer or server.
@@ -43,12 +48,13 @@ The unit plugs into the Keyboard, Video and Mouse ports of a computer or server 
   * Recommendation: `MS2109` based devices [link](http://en.macrosilicon.com/info.asp?base_id=2&third_id=50)
   * Input: Up to 4K 30FPS
   * Output: Up to 1080P 30FPS @ MJPEG
-* Linux single-board computer
+* Linux single-board computer (x86_64 also works)
   * Recommendation: `Phicomm N1`, [Raspberry Pi 4](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/) or other models,
   * Recent linux kernel
   * 2+ USB ports
-* Arduino Leonardo [link](https://docs.arduino.cc/hardware/leonardo)
-  * Emulate HID (mouse and keyboard)
+* Adapter to Emulate HID (mouse and keyboard) (Either)
+  * Arduino Leonardo [link](https://docs.arduino.cc/hardware/leonardo)
+  * CH9329 Cable / Adapter 
 * Optional
   * USB-to-TTL Adapter
     * If linux sbc has no built-in serial port
@@ -59,7 +65,7 @@ The unit plugs into the Keyboard, Video and Mouse ports of a computer or server 
 
 ## Deploy and Run
 
-### 1. Prepare Arduino Leonardo
+### 1. Optional: Prepare Arduino Leonardo (if using)
 
 <details>
 
@@ -90,12 +96,13 @@ SSH to linux SBC with your pc.
 
 <summary>Deploy App and Dependency on Linux SBC</summary>
 
-* Build and install [MJPG-Streamer](https://github.com/jacksonliam/mjpg-streamer)
-  * [How to build MJPG-Streamer](https://www.acmesystems.it/video_streaming)
+* Install ustreamer
+  * Many current distros have package installers for ustreamer
+  * [ustreamer gihub](https://github.com/pikvm/ustreamer)
 * Install Node.js 14.x+
   * [Install NodeJS on Armbian](https://www.autoptr.top/htmls/i12bretro/0507)
 * Clone repo and install its dependency
-  * `git clone https://github.com/Nihiue/open-ip-kvm.git`
+  * `git clone https://github.com/hamMUSings/open-ip-kvm`
   * `cd open-ip-kvm && npm install`
 </details>
 
@@ -105,10 +112,11 @@ SSH to linux SBC with your pc.
 
 * Connect IO
   * HDMI-USB capture device via USB
-  * Arduino Leonardo via native serial port or USB-TTL adapter
+  * Arduino Leonardo OR CH9329 via native serial port or USB-TTL adapter
 * Edit `open-ip-kvm/server/config.json`
-  * `mjpg_streamer.device`: path of HDMI-USB capture device
+  * `ustreamer.device`: path of HDMI-USB capture device
   * `serialport`: path of serial port
+  * `driverName': CH9329 OR arduino-leonard
 
 </details>
 
@@ -116,7 +124,7 @@ SSH to linux SBC with your pc.
 ### 3. Run
 
 1. Connect HDMI output of target computer to HDMI-USB capture device
-2. Connect target computer to leonardo via USB
+2. Connect target computer to leonardo OR CH9329 via USB
 3. Run `cd open-ip-kvm && npm run start` on linux SBC
 4. Turn on target computer
 5. Open `http://[IP of Linux SBC]:8000` in web browser
@@ -136,7 +144,7 @@ MIT
 
 ## Credits
 
-[mjpg_streamer](https://github.com/jacksonliam/mjpg-streamer)
+[ustreamer](https://github.com/pikvm/ustreamer)
 
 For production environment, use [Pi-KVM](https://pikvm.org/)
 
