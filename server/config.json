@@ -7,7 +7,7 @@
   },
   "ustreamer": {
     "device": "/dev/video0",
-    "res": "640x480",
+    "res": "800x600",
     "fps": 30,
     "stream_port": 8010,
     "ip_address": "0.0.0.0"
